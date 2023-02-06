@@ -9,7 +9,14 @@ import logging
 LOGGER = logging.getLogger(__name__)
 
 
-def quantize(emb_folder, index_folder, index_name, max_index_memory_usage, current_memory_available, nb_cores):
+def quantize(
+    emb_folder,
+    index_folder,
+    index_name,
+    max_index_memory_usage,
+    current_memory_available,
+    nb_cores,
+):
     """calls autofaiss to build an index"""
 
     from autofaiss import build_index  # pylint: disable=import-outside-toplevel
@@ -43,6 +50,7 @@ def clip_index(
     copy_metadata=True,
     image_subfolder="img_emb",
     text_subfolder="text_emb",
+    joint_subfolder="joint_emb",
     nb_cores=None,
 ):
     """indexes clip embeddings using autofaiss"""
@@ -58,6 +66,14 @@ def clip_index(
         embeddings_folder + "/" + text_subfolder,
         index_folder,
         "text",
+        max_index_memory_usage,
+        current_memory_available,
+        nb_cores,
+    )
+    quantize(
+        embeddings_folder + "/" + joint_subfolder,
+        index_folder,
+        "joint",
         max_index_memory_usage,
         current_memory_available,
         nb_cores,
