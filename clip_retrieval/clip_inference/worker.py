@@ -31,6 +31,7 @@ def worker(
     enable_text=True,
     enable_image=True,
     enable_metadata=False,
+    enable_joint_text_image=False,
     wds_image_key="jpg",
     wds_caption_key="txt",
     clip_model="ViT-B/32",
@@ -50,7 +51,10 @@ def worker(
 
     def reader_builder(sampler):
         _, preprocess = load_clip(
-            clip_model=clip_model, use_jit=use_jit, warmup_batch_size=batch_size, clip_cache_path=clip_cache_path
+            clip_model=clip_model,
+            use_jit=use_jit,
+            warmup_batch_size=batch_size,
+            clip_cache_path=clip_cache_path,
         )
         if input_format == "files":
             return FilesReader(
@@ -85,6 +89,7 @@ def worker(
             enable_image=enable_image,
             enable_text=enable_text,
             enable_metadata=enable_metadata,
+            enable_joint_text_image=enable_joint_text_image,
             use_mclip=use_mclip,
             clip_model=clip_model,
             use_jit=use_jit,
@@ -100,6 +105,7 @@ def worker(
             enable_text=enable_text,
             enable_image=enable_image,
             enable_metadata=enable_metadata,
+            enable_joint_text_image=enable_joint_text_image,
             output_partition_count=output_partition_count,
         )
 
